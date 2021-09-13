@@ -46,6 +46,9 @@
                                         <th class="columna-header">
                                             <span>Nombre</span>
                                         </th>
+                                        <th class="columna-header">
+                                            <span>Mail</span>
+                                        </th>
                                     </tr>   
                                 </thead>
                                 <tbody id="container-cliente">       
@@ -59,6 +62,7 @@
                     <form id="form-abm-clientes" method="POST">
                         <input type="hidden" id="id-cliente">
                         <input type="text" class="textbox-general-abm" id="nombre-cliente" placeholder="Nombre del cliente" required>
+                        <input type="email" class="textbox-general-abm" id="mail-cliente" placeholder="Mail" required>
                         <input type="text" class="textbox-general-abm" id="password-cliente" placeholder="Contraseña" required>
                         <div class="container-btn-upload">
                             <input id="btn-agregar-nueva-cliente" type="submit" class="btn-enviar" value="Agregar">

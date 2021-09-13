@@ -9,7 +9,7 @@ $(document).ready(() =>
         obtener_carpetas();
     }
 
-    $('#form-cliente-asociado').submit(function(e) 
+    $('#form-cliente-asociado').submit(function(e)
     {
         const postData =
         {
@@ -117,7 +117,6 @@ $(document).ready(() =>
             data: {ubicacion},
             success: function (response)
             {
-
                 $('#container-carpetas').html(response);
             }
         });

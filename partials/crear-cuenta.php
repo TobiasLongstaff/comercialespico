@@ -48,9 +48,6 @@
                 }
                 else
                 { 
-                    $nombre_carpeta_cliente = $nombre_carpeta;
-                    mkdir('../carpetas-clientes/'.$nombre_carpeta_cliente, 0777, true);
-
                     // $mail = new PHPMailer();
                     // $mail->IsSMTP();
                     // $mail->SMTPAuth = true;

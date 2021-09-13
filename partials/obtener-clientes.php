@@ -11,6 +11,7 @@
         $json[] = array(
             'id' => $filas['id'],
             'nombre' => $filas['nombre_apellido'],
+            'mail' => $filas['mail']
         );
     }
 

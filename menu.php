@@ -10,15 +10,6 @@
     {
         $tipo_usuario = $_SESSION['tipo_usuario'];
         $nombre_usuario = $_SESSION['nombre_usuario'];
-        if(empty($_SESSION['nombre-carpeta-cliente']))
-        {
-            $carpeta_usuario = '';
-        }
-        else
-        {
-            $carpeta_usuario = $_SESSION['nombre-carpeta-cliente'];
-        }
-        
     }
 
 ?>        
@@ -66,7 +57,7 @@
                             ?>                    
                         </div>
                         <div class="container-nombre-ubicacion">
-                            <h2>../<?=$carpeta_usuario?>/</h2>
+                            <h2></h2>
                             <h2 id="text-ubicacion"></h2>                            
                         </div>
                     </div>
@@ -78,7 +69,7 @@
                     ?>
                             <div class="footer-archivos">
                                 <form id="form-cliente-asociado" method="post">
-                                    <input type="hidden" id="nombre-carpeta" value="<?=$carpeta_usuario?>/">
+                                    <input type="hidden" id="nombre-carpeta" value="">
                                     <label>Cliente</label><br>
                                     <select id="select-cliente" class="selectlist">
                                         <?php
@@ -146,7 +137,6 @@
     <script src="assets/plugins/jquery-3.5.1.min.js"></script>
     <script src="assets/plugins/sweetalert2.all.min.js"></script>
     <script type="text/javascript">
-        var ubicacion = '<?=$carpeta_usuario?>';
         var tipo = '<?=$tipo_usuario?>';
     </script>
     <script src="assets/scripts/menu.js"></script>

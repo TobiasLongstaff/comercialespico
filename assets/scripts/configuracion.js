@@ -10,6 +10,7 @@ $(document).ready(() =>
             nombre: $('#nombre-cliente').val(),
             id: $('#id-cliente').val(),
             password: $('#password-cliente').val(),
+            mail: $('#mail-cliente').val()
         };
 
         let url = edit_cliente === false ? 'partials/agregar-cliente.php' : 'partials/editar-cliente.php';
@@ -79,6 +80,7 @@ $(document).ready(() =>
         {
             const cliente = JSON.parse(data);
             $('#nombre-cliente').val(cliente.nombre);
+            $('#mail-cliente').val(cliente.mail);
         })
 
         $('#btn-agregar-nueva-cliente').val('Editar');
@@ -112,6 +114,7 @@ $(document).ready(() =>
                         </td>
                         <td>${cliente.id}</td>
                         <td>${cliente.nombre}</td>
+                        <td>${cliente.mail}</td>
                     </tr>  
                     `                           
                 });

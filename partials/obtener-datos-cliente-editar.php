@@ -12,7 +12,8 @@
         if($filas = mysqli_fetch_array($resultado))
         {
             $json[] = array(
-                'nombre' => $filas['nombre_apellido']
+                'nombre' => $filas['nombre_apellido'],
+                'mail' => $filas['mail']
             );
         }
         $jsonstring = json_encode($json[0]);

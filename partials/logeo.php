@@ -29,20 +29,6 @@
             {
                 echo 'Su cuenta está pendiente de aprobación';
             }
-
-            if($tipo_usuario == 'clientes')
-            {
-                $sql_carpeta = "SELECT * FROM carpetas_asociadas WHERE id_cliente = '$id'";
-                $resultado_carpeta = mysqli_query($conexion, $sql_carpeta);
-                if($filas_carpeta = mysqli_fetch_array($resultado_carpeta))
-                {
-                    $_SESSION['nombre-carpeta-cliente'] = $filas_carpeta['nombre_carpeta'];
-                }
-            }
-            else
-            {
-                $_SESSION['nombre-carpeta-cliente'] = $filas['nombre_carpeta'];
-            }
         }
         else
         {

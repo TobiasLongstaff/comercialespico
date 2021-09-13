@@ -7,10 +7,11 @@
     {
         $nombre = $_POST['nombre'];
         $password = sha1($_POST['password']);
+        $mail = $_POST['mail'];
         $hash = md5(rand(0,1000));
 
         $sql = "INSERT INTO usuarios (nombre_apellido, mail, password, hash, nombre_carpeta, tipo) 
-        VALUES ('$nombre', '$nombre', '$password', '$hash', '', 'clientes')";
+        VALUES ('$nombre', '$mail', '$password', '$hash', '', 'clientes')";
         $resultado = mysqli_query($conexion, $sql);
         if(!$resultado)
         {
