@@ -1,16 +1,7 @@
 <?php
     session_start();
 
-    if(!empty($_POST['ubicacion'])) 
-    {
-        $ubicacion = $_POST['ubicacion'];       
-    }
-    else
-    {
-        $ubicacion = $_SESSION['nombre_carpeta'];
-    }
-
-    $ruta = '../carpetas-clientes/'.$ubicacion;
+    $ruta = '../carpetas-clientes/';
 
     function obtener_estructura_directorios($ruta)
     {
@@ -23,7 +14,7 @@
                 {
                     echo '
                     <div filaId='.$archivo.'>
-                        <button class="btn-carpeta">
+                        <button class="btn-carpeta-clientes">
                             <i class="upload-file fas fa-folder"></i><br>
                             <label>'.$archivo.'</label>
                         </button>
@@ -38,9 +29,7 @@
         }
     }
         
-    obtener_estructura_directorios($ruta);  
-
-       
+    obtener_estructura_directorios($ruta);        
 
     // mysqli_close($conexion);
 ?>

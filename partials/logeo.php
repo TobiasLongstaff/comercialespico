@@ -7,7 +7,7 @@
     {
         $mail = $_POST['mail'];
         $password = sha1($_POST['password']);
-        $sql = "SELECT * FROM usuarios WHERE mail = '$mail' AND password = '$password'";
+        $sql = "SELECT * FROM usuarios WHERE password = '$password' AND mail = '$mail' OR nombre_apellido = '$mail'";
         $resultado = mysqli_query($conexion, $sql);
         $numero_fila = mysqli_num_rows($resultado);
         if($numero_fila == '1')
@@ -21,7 +21,8 @@
                 $_SESSION['id_usuario'] = $id;
                 $_SESSION['tipo_usuario'] = $tipo_usuario;
                 $_SESSION['nombre_usuario'] = $filas['nombre_apellido'];
-                $_SESSION['mail_usuario'] = $filas['mail'];                
+                $_SESSION['mail_usuario'] = $filas['mail'];             
+                $_SESSION['nombre_carpeta'] = $filas['nombre_carpeta'];   
 
                 echo '1';                
             }

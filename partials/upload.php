@@ -1,6 +1,4 @@
-<?php
-
-    require 'conexion.php';   
+<?php 
     session_start();
 
     if(isset($_POST['ubicacion']))

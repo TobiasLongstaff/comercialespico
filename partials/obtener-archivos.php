@@ -6,49 +6,45 @@
 
     if(isset($_POST['ubicacion']))
     {
-        $ubicacion = $_POST['ubicacion'];
-    }
-    else
-    {
-        if(!empty($_SESSION['id_usuario']))
-        {
-            $id_usuario = $_SESSION['id_usuario'];
-            $sql="SELECT * FROM carpetas_asociadas WHERE id_cliente = '$id_usuario'";
-            $resultado=mysqli_query($conexion,$sql);
-            if($filas = mysqli_fetch_array($resultado))
-            {
-                $ubicacion = $filas['nombre_carpeta'];
-            }
-        } 
-    }
-
-    $ruta = '../carpetas-clientes/'.$ubicacion.'/';    
-
-    function obtener_estructura_directorios($ruta, $ubicacion)
-    {
-        if(is_dir($ruta))
-        {
-            $gestor = opendir($ruta);
-            while(($archivo = readdir($gestor)) !== false)  
-            {
-                if($archivo != "." && $archivo != "..") 
-                {
-                    echo '
-                    <div class="container-ico-archivos" filaId=https://drivecomercial.com/'.$ubicacion.'/'.$archivo.'>
-                        <button class="mostrar-archivo">
-                            <i class="upload-file fas fa-file-alt"></i><br>
-                            <label>'.$archivo.'</label>
-                        </button>
-                    </div>';
-                }
-            }
-            closedir($gestor);
-        } 
-        else 
-        {
-            echo "No es una ruta de directorio valida<br/>";
+        if(!empty($_SESSION['nombre_carpeta']))
+        {               
+            $carpeta = $_SESSION['nombre_carpeta'];
+            $ubicacion = $carpeta.'/'.$_POST['ubicacion'];
         }
-    }
+        else
+        { 
+            $ubicacion = $_POST['ubicacion'];
+        }
 
-    obtener_estructura_directorios($ruta, $ubicacion);
+        $ruta = '../carpetas-clientes/'.$ubicacion.'/';    
+
+        function obtener_estructura_directorios($ruta, $ubicacion)
+        {
+            if(is_dir($ruta))
+            {
+                $gestor = opendir($ruta);
+                while(($archivo = readdir($gestor)) !== false)  
+                {
+                    if($archivo != "." && $archivo != "..") 
+                    {
+                        echo '
+                        <div class="container-ico-archivos" filaId=https://drivecomercial.com/carpetas-clientes/'.$ubicacion.'/'.$archivo.'>
+                            <button class="mostrar-archivo">
+                                <i class="upload-file fas fa-file-alt"></i><br>
+                                <label>'.$archivo.'</label>
+                            </button>
+                        </div>';
+                    }
+                }
+                closedir($gestor);
+            } 
+            else 
+            {
+                echo "No es una ruta de directorio valida<br/>";
+                echo $ruta;
+            }
+        }
+    
+        obtener_estructura_directorios($ruta, $ubicacion);
+    }
 ?>

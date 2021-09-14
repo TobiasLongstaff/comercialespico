@@ -2,51 +2,52 @@ $(document).ready(() =>
 {
     if(tipo == 'clientes')
     {
-        obtener_archivos();
+        obtener_carpetas();
     }
     else
     {
-        obtener_carpetas();
+        obtener_carpetas_clientes();
     }
 
-    $('#form-cliente-asociado').submit(function(e)
-    {
-        const postData =
-        {
-            cliente: $('#select-cliente').val(),
-            carpeta: $('#nombre-carpeta').val()
-        };
-
-        $.post('partials/asociar-carpeta.php', postData, function (data)
-        {
-            console.log(data);
-            if(data == 1)
-            {
-                Swal.fire(
-                    'Guardado',
-                    '¡Operación realizada correctamente !',
-                    'success'
-                )
-            }
-        });
-        e.preventDefault();
-    });
 
     $(document).on('click', '.btn-carpeta', function(e)
     {
         let element = $(this)[0].parentElement;
         let nombre_carpeta = $(element).attr('filaid');
 
-        $('#text-ubicacion').html(nombre_carpeta);
-        $('#nombre-carpeta-destino').val(nombre_carpeta);
+        var ubicacion = $('#nombre-sub-carpeta').val()+'/'+nombre_carpeta
 
-        ubicacion = $('#nombre-carpeta').val()
-        $('#nombre-carpeta').val(ubicacion+nombre_carpeta);
+        $('#nombre-carpeta').val(ubicacion);
+        $('#text-ubicacion').html(ubicacion);
+
+
+        $('#btn-volver-carpeta').show();
+        $('#btn-volver').hide();
+
+        obtener_archivos(ubicacion);
+
+        console.log(ubicacion)
 
         $('.cantainer-subir-archivo').css('display', 'block');
-        obtener_archivos(nombre_carpeta);
         document.getElementById('crear-nueva-carpeta').disabled = true;
-        $('.footer-archivos').css('display', 'block');
+        e.preventDefault();
+    });
+
+    $(document).on('click', '.btn-carpeta-clientes', function(e)
+    {
+        let element = $(this)[0].parentElement;
+        let nombre_carpeta = $(element).attr('filaid');
+
+        $('#text-ubicacion').html(nombre_carpeta);
+
+        $('#nombre-carpeta').val(nombre_carpeta);
+        $('#nombre-sub-carpeta').val(nombre_carpeta);
+
+        document.querySelector('#btn-volver').disabled = false;
+        document.querySelector('#crear-nueva-carpeta').disabled = false;
+
+        obtener_carpetas(nombre_carpeta);
+
         e.preventDefault();
     });
 
@@ -69,16 +70,36 @@ $(document).ready(() =>
 
     $('#btn-volver').click(function() 
     {
+        obtener_carpetas_clientes();
+
         $('#text-ubicacion').html('');
-        obtener_carpetas();
-        $('#nombre-carpeta').val(ubicacion)
+        $('#nombre-sub-carpeta').val('')
+        $('#nombre-carpeta').val('')
+        
+        document.querySelector('#btn-volver').disabled = true;
+        document.querySelector('#crear-nueva-carpeta').disabled = true;
+    });
+
+    $('#btn-volver-carpeta').click(function() 
+    {
+        var sub_ubicacion = $('#nombre-sub-carpeta').val();
+        $('#nombre-carpeta').val(sub_ubicacion);
+
+        $('#text-ubicacion').html(sub_ubicacion);
+
+        $(this).hide();
+        $('#btn-volver').show();
+
+        obtener_carpetas(sub_ubicacion);
+        console.log(sub_ubicacion);
         $('.cantainer-subir-archivo').css('display', 'none');
-        $('.footer-archivos').css('display', 'none');
-        document.getElementById('crear-nueva-carpeta').disabled = false;
+        document.querySelector('#btn-volver').disabled = false;
+        document.querySelector('#crear-nueva-carpeta').disabled = false;
     });
 
     $('#crear-nueva-carpeta').click(function() 
     {
+        var ubicacion = $('#nombre-carpeta').val();
         Swal.fire(
         {
             title: 'Crear Carpeta',
@@ -91,10 +112,10 @@ $(document).ready(() =>
             confirmButtonText: 'Crear',
             showLoaderOnConfirm: true,
             preConfirm: (nombre_carpeta) => {
-                $.post('partials/crear-carpeta.php', {nombre_carpeta}, function(response)
+                $.post('partials/crear-carpeta.php', {nombre_carpeta, ubicacion}, function(response)
                 {                      
                     console.log(response);
-                    obtener_carpetas()
+                    obtener_carpetas(ubicacion)
                 });                  
             },
             allowOutsideClick: () => !Swal.isLoading()
@@ -102,7 +123,7 @@ $(document).ready(() =>
         {
             if (result.isConfirmed) 
             {
-                obtener_carpetas()
+                obtener_carpetas(ubicacion)
             }
         });
     });
@@ -122,12 +143,26 @@ $(document).ready(() =>
         });
     }
 
-    function obtener_carpetas()
+    function obtener_carpetas_clientes()
+    {
+        $.ajax(
+            {
+                url: 'partials/obtener-carpetas_clientes.php',
+                type: 'GET',
+                success: function (response)
+                {
+                    $('#container-carpetas').html(response);
+                }
+            });
+    }
+
+    function obtener_carpetas(ubicacion)
     {
         $.ajax(
         {
             url: 'partials/obtener-carpetas.php',
-            type: 'GET',
+            type: 'POST',
+            data: {ubicacion},
             success: function (response)
             {
                 $('#container-carpetas').html(response);
@@ -177,7 +212,7 @@ $(document).ready(() =>
 
     $btnEnviar.addEventListener("click", async () => 
     {
-        var ubicacion = $('#nombre-carpeta-destino').val();
+        var ubicacion = $('#nombre-carpeta').val();
         console.log(ubicacion);
 
         const archivosParaSubir = $inputArchivos.files;

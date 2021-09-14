@@ -5,10 +5,11 @@
 
     if($_SESSION['tipo_usuario'] == 'admin' || $_SESSION['tipo_usuario'] == 'editor')
     {
-        if(isset($_POST['nombre_carpeta']))
+        if(isset($_POST['nombre_carpeta']) && isset($_POST['ubicacion']))
         {
             $nombre_carpeta = $_POST['nombre_carpeta'];
-            mkdir('../carpetas-clientes/'.$nombre_carpeta , 0777, true);
+            $ubicacion_actual = $_POST['ubicacion'];
+            mkdir('../carpetas-clientes/'.$ubicacion_actual.'/'.$nombre_carpeta , 0777, true);
         }        
     }
 

@@ -41,20 +41,24 @@
                 <div class="container-archivos">
                     <div class="container-controles">
                         <div>
+                            <input type="hidden" id="nombre-carpeta">
+                            <input type="hidden" id="nombre-sub-carpeta"> 
+                            <button type="button" class="btn-nueva-carpeta" id="btn-volver-carpeta">
+                                <i class="fas fa-chevron-left"></i>
+                            </button> 
                             <?php
                                 if($tipo_usuario == 'admin' || $tipo_usuario == 'editor')
                                 {
-
                             ?>
-                                    <button type="button" class="btn-nueva-carpeta" id="btn-volver">
+                                    <button type="button" class="btn-nueva-carpeta" id="btn-volver" disabled>
                                         <i class="fas fa-chevron-left"></i>
                                     </button> 
-                                    <button type="button" class="btn-nueva-carpeta" id="crear-nueva-carpeta">
+                                    <button type="button" class="btn-nueva-carpeta" id="crear-nueva-carpeta" disabled>
                                         <i class="fas fa-folder-plus"></i>
                                     </button>       
                             <?php
                                 }
-                            ?>                    
+                            ?>                 
                         </div>
                         <div class="container-nombre-ubicacion">
                             <h2></h2>
@@ -63,31 +67,6 @@
                     </div>
                     <div id="container-carpetas">
                     </div>
-                    <?php
-                        if($tipo_usuario == 'admin' || $tipo_usuario == 'editor')
-                        {
-                    ?>
-                            <div class="footer-archivos">
-                                <form id="form-cliente-asociado" method="post">
-                                    <input type="hidden" id="nombre-carpeta" value="">
-                                    <label>Cliente</label><br>
-                                    <select id="select-cliente" class="selectlist">
-                                        <?php
-                                            $sql="SELECT * FROM usuarios WHERE tipo = 'clientes'";
-                                            $resultado=mysqli_query($conexion,$sql);
-                                            while($filas = mysqli_fetch_array($resultado))
-                                            {
-                                                echo '<option value="'.$filas['id'].'">'.$filas['nombre_apellido'].'</option>';
-                                            }
-                                        ?>
-                                        
-                                    </select>                        
-                                    <input type="submit" class="btn-enviar" value="Asociar Cliente">    
-                                </form>
-                            </div>
-                    <?php
-                        }
-                    ?>
                 </div>
                 <?php
                     if($tipo_usuario == 'admin' || $tipo_usuario == 'editor')
@@ -95,8 +74,7 @@
                 ?>
                         <div class="cantainer-subir-archivo">
                             <h2>Subir Archivos</h2>
-                            <div class="file-upload">
-                                <input type="hidden" id="nombre-carpeta-destino">
+                            <div class="file-upload"> 
                                 <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Agregar Archivos</button>
                                 <div class="image-upload-wrap">
                                     <input multiple class="file-upload-input" type='file' id="inputArchivos" onchange="readURL(this);" />

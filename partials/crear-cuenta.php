@@ -25,11 +25,9 @@
         $smtpClave = "sopePE33so";  // Mi contraseña
 
         $hash = md5(rand(0,1000));
-        $nombre_carpeta = str_replace(' ','-', $nombre_apellido);
-        $nombre_carpeta = strtolower($nombre_carpeta);
 
 
-        $sql = "SELECT mail FROM usuarios WHERE mail = '$mail_cliente'";
+        $sql = "SELECT mail FROM usuarios WHERE mail = '$mail_cliente' OR nombre_apellido = '$nombre_apellido'";
         $resultado = mysqli_query($conexion, $sql);
         if(mysqli_num_rows($resultado) > 0)
         {
@@ -40,7 +38,7 @@
             if($password == $password_con)
             {
                 $sql = "INSERT INTO usuarios (mail, password, nombre_apellido, hash, nombre_carpeta, tipo) 
-                VALUES ('$mail_cliente', '$password', '$nombre_apellido', '$hash', '$nombre_carpeta', 'Pendiente')";
+                VALUES ('$mail_cliente', '$password', '$nombre_apellido', '$hash', '', 'Pendiente')";
                 $resultado = mysqli_query($conexion, $sql);
                 if(!$resultado)
                 {

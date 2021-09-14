@@ -337,7 +337,12 @@ nav h1
 
 }
 
-.btn-carpeta, .mostrar-archivo
+#btn-volver-carpeta
+{
+    display: none;
+}
+
+.btn-carpeta, .mostrar-archivo, .btn-carpeta-clientes
 {
     background-color: transparent;
     font-family: 'Poppins', sans-serif;
@@ -346,7 +351,7 @@ nav h1
     cursor: pointer;
 }
 
-.btn-carpeta:hover, .container-ico-archivos:hover
+.btn-carpeta:hover, .container-ico-archivos:hover, .btn-carpeta-clientes:hover
 {
     transition: all .2s ease;
     transform: scale(1.02);
