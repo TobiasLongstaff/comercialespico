@@ -9,6 +9,130 @@ $(document).ready(() =>
         obtener_carpetas_clientes();
     }
 
+    $(document).on('click', '.remove-carpeta', function()
+    {
+        let element = $(this)[0].parentElement.parentElement;
+        let nombre_carpeta = $(element).attr('filaid');
+
+        var ubicacion_carpeta = $('#nombre-carpeta').val()
+
+        var ubicacion = ubicacion_carpeta+'/'+nombre_carpeta;
+
+        Swal.fire(
+        {
+            title: '¿Queres eliminar esta carpeta?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => 
+        {
+            if (result.isConfirmed) 
+            {
+                $.post('partials/eliminar-archivos.php', {ubicacion}, function(response)
+                {
+                    console.log(response)
+                    if(response != '')
+                    {
+                        Swal.fire(
+                            'Error al eliminar la carpeta',
+                            'Antes de eliminar la carpeta es necesario eliminar todos los archivos que se encuentra dentro',
+                            'error'
+                        )
+                    }
+                    else
+                    {
+                        obtener_carpetas(ubicacion_carpeta);
+                    }
+                    
+                });       
+            }
+        });
+    });
+
+    $(document).on('click', '.remove-archivo', function()
+    {
+        let element = $(this)[0].parentElement.parentElement;
+        let nombre_carpeta = $(element).attr('archivo');
+
+        var ubicacion_carpeta = $('#nombre-carpeta').val()
+
+        var ubicacion = ubicacion_carpeta+'/'+nombre_carpeta;
+
+        console.log(ubicacion);
+
+        Swal.fire(
+        {
+            title: '¿Queres eliminar este archivo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => 
+        {
+            if (result.isConfirmed) 
+            {
+                $.post('partials/eliminar-archivos.php', {ubicacion}, function(response)
+                {
+                    console.log(response)
+                    if(response != '1')
+                    {
+                        Swal.fire(
+                            'Error',
+                            'Intentar mas tarde',
+                            'error'
+                        )
+                    }
+                    else
+                    {
+                        obtener_carpetas(ubicacion_carpeta);
+                    }
+                    
+                });       
+            }
+        });
+    });
+
+    $(document).on('mouseenter', '.container-carpetas', function()
+    {
+        let element = $(this)[0];
+        let nombre_carpeta = $(element).attr('filaid');
+
+        var controles = '.container-controles-carpetas-'+nombre_carpeta;
+        $(controles).css('display', 'block');
+    });
+
+    $(document).on('mouseleave', '.container-carpetas', function()
+    {
+        let element = $(this)[0];
+        let nombre_carpeta = $(element).attr('filaid');
+
+        var controles = '.container-controles-carpetas-'+nombre_carpeta;
+        $(controles).css('display', 'none');
+    });
+
+    $(document).on('mouseenter', '.container-btn-archivos', function()
+    {
+        let element = $(this)[0];
+        let nombre_carpeta = $(element).attr('filanom');
+
+        var controles = '.container-controles-archivos-'+nombre_carpeta;
+        $(controles).css('display', 'flex');
+    });
+
+    $(document).on('mouseleave', '.container-btn-archivos', function()
+    {
+        let element = $(this)[0];
+        let nombre_carpeta = $(element).attr('filanom');
+
+        var controles = '.container-controles-archivos-'+nombre_carpeta;
+        $(controles).css('display', 'none');
+    });
+
 
     $(document).on('click', '.btn-carpeta', function(e)
     {
@@ -213,6 +337,8 @@ $(document).ready(() =>
     $btnEnviar.addEventListener("click", async () => 
     {
         var ubicacion = $('#nombre-carpeta').val();
+        var sub_ubicacion = $('#nombre-sub-carpeta').val();
+        
         console.log(ubicacion);
 
         const archivosParaSubir = $inputArchivos.files;
@@ -230,6 +356,7 @@ $(document).ready(() =>
         {
             formData.append("archivos[]", archivo);
             formData.append('ubicacion', ubicacion);
+            formData.append('sub-ubicacion', sub_ubicacion);
         }
 
         // Los enviamos

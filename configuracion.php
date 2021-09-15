@@ -2,7 +2,7 @@
 
     session_start();
 
-    if(empty($_SESSION['id_usuario']))
+    if($_SESSION['tipo_usuario'] != 'admin')
     {
         header("location: index.php");
     }
@@ -64,6 +64,7 @@
                         <input type="text" class="textbox-general-abm" id="nombre-cliente" placeholder="Nombre del cliente" required>
                         <input type="email" class="textbox-general-abm" id="mail-cliente" placeholder="Mail" required>
                         <input type="text" class="textbox-general-abm" id="password-cliente" placeholder="Contraseña" required>
+                        <label id="error-login"></label>
                         <div class="container-btn-upload">
                             <input id="btn-agregar-nueva-cliente" type="submit" class="btn-enviar" value="Agregar">
                         </div>

@@ -12,17 +12,26 @@
         $nombre_carpeta = str_replace(' ','-', $nombre);
         $nombre_carpeta = strtolower($nombre_carpeta);
 
-        $sql = "INSERT INTO usuarios (nombre_apellido, mail, password, hash, nombre_carpeta, tipo) 
-        VALUES ('$nombre', '$mail', '$password', '$hash', '$nombre_carpeta', 'clientes')";
+        $sql = "SELECT * FROM usuarios WHERE mail = '$mail' OR nombre_apellido = '$nombre'";
         $resultado = mysqli_query($conexion, $sql);
-        if(!$resultado)
+        if(mysqli_num_rows($resultado) > 0)
         {
-            echo 'error';
+            echo 'El mail o usuario ya estan asociados a una cuenta';
         }
         else
         {
-            mkdir('../carpetas-clientes/'.$nombre_carpeta , 0777, true); 
-            echo '1';
+            $sql = "INSERT INTO usuarios (nombre_apellido, mail, password, hash, nombre_carpeta, tipo) 
+            VALUES ('$nombre', '$mail', '$password', '$hash', '$nombre_carpeta', 'clientes')";
+            $resultado = mysqli_query($conexion, $sql);
+            if(!$resultado)
+            {
+                echo 'error';
+            }
+            else
+            {
+                mkdir('../carpetas-clientes/'.$nombre_carpeta , 0777, true); 
+                echo '1';
+            }
         }
     }
     mysqli_close($conexion); 

@@ -33,7 +33,7 @@ $(document).ready(() =>
             }
             else
             {
-                console.log(data);
+                $('#error-login').html(data);
             }
         }); 
         e.preventDefault();   
@@ -57,14 +57,22 @@ $(document).ready(() =>
         {
             if (result.isConfirmed) 
             {
-                $.post('partials/eliminar-cliente.php', {id}, function()
+                $.post('partials/eliminar-cliente.php', {id}, function(data)
                 {
-                    Swal.fire(
-                        '¡cliente eliminado exitosamente!',
-                        '',
-                        'success'
-                    )
-                    obtener_clientes();
+                    if(data == '1')
+                    {
+                        Swal.fire(
+                            '¡cliente eliminado exitosamente!',
+                            '',
+                            'success'
+                        )
+                        obtener_clientes();                        
+                    }
+                    else
+                    {
+                        $('#error-login').html('Antes de eliminar un cliente es necesario eliminar todos los archivos que se encuentra dentro');
+                    }
+
                 });       
             }
         });

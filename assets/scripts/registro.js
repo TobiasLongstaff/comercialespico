@@ -12,7 +12,7 @@ $(document).ready(() =>
         $.post('partials/crear-cuenta.php', postData, function (data)
         {    
             console.log(data)      
-            if(data == '1')
+            if(data == '11')
             {
                 Swal.fire(
                     '¡Cuenta creada correctamente!',
