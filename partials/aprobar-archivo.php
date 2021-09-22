@@ -1,5 +1,6 @@
-<?php 
-    session_start();
+<?php
+
+    session_start();    
     require 'conexion.php';
 
     /**
@@ -9,17 +10,27 @@
     require("../assets/plugins/class.phpmailer.php");
     require("../assets/plugins/class.smtp.php");
 
-    if(isset($_POST['ubicacion']) && isset($_POST['sub-ubicacion']))
+    if(isset($_POST['ubicacion']) && isset($_SESSION['nombre_carpeta']) && isset($_SESSION['mail_general']))
     {
         $ubicacion = $_POST['ubicacion'];
-        $sub_ubicacion = $_POST['sub-ubicacion'];
-        $conteo = count($_FILES["archivos"]["name"]);
+        $nombre_carpeta = $_SESSION['nombre_carpeta'];
+        $mail_cliente = $_SESSION['mail_general'];
 
-        $sql = "SELECT * FROM usuarios WHERE nombre_carpeta = '$sub_ubicacion'";
+        $array_archivo = explode('.', $ubicacion);
+
+        $ubicacion_nombre = $array_archivo[0];
+        $tipo_archivo = $array_archivo[1];
+
+        $nuevo_nombre = '../carpetas-clientes/'.$nombre_carpeta.$ubicacion_nombre.'!.'.$tipo_archivo;
+        $file = '../carpetas-clientes/'.$nombre_carpeta.$ubicacion;
+
+        rename ($file, $nuevo_nombre);
+
+        $sql = "SELECT * FROM mail";
         $resultado=mysqli_query($conexion,$sql);
         if($filas = mysqli_fetch_array($resultado))
         {
-            $mail_cliente = $filas['mail'];
+            $mail_cliente = $filas['correo'];
             $nombre = 'DriveComercial.com';
         
             // Datos de la cuenta de correo utilizada para enviar vía SMTP
@@ -44,7 +55,7 @@
             $mail->FromName = $nombre;
             $mail->AddAddress($mail_cliente);
         
-            $mail->Subject = "Nuevo archive en drivecomercial.com"; // Este es el titulo del email.
+            $mail->Subject = "Archivo aprobado en drivecomercial.com"; // Este es el titulo del email.
             $mail->Body = '
             <head>
                 <meta charset="UTF-8">
@@ -94,7 +105,7 @@
                     <div>
                         <div>
                             <h1>¡Hola!</h1>
-                            <h2 style="color: #7D7D7D;">Te avisamos que se subió un nuevo archivo a la carpeta '.$ubicacion.'. Gracias por utilizar drivecomercial.com<br>
+                            <h2 style="color: #7D7D7D;">Te avisamos que El archivo '.$ubicacion.' ha sido aprobado por '.$_SESSION['nombre_usuario'].' Gracias por utilizar drivecomercial.com<br>
                             En caso de inconvenientes contactar con soporte técnico.</h2>              
                         </div>               
                     </div>
@@ -106,28 +117,12 @@
             }
             else
             {
-            echo '1'; 
+                echo '1'; 
             }            
         }
 
-        for ($i = 0; $i < $conteo; $i++) 
-        {
-            $ubicacionTemporal = $_FILES["archivos"]["tmp_name"][$i];
-            $nombreArchivo = $_FILES["archivos"]["name"][$i];
-            // $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
-
-            // // Renombrar archivo
-            // $nuevoNombre = sprintf("%s_%d.%s", uniqid(), $i, $extension);
-
-            // Mover del temporal al directorio actual
-            $nombreArchivo = str_replace(' ','-', $nombreArchivo);
-            $nombreArchivo = str_replace('#','-', $nombreArchivo);
-            $nombreArchivo = str_replace('!','-', $nombreArchivo);
-            move_uploaded_file($ubicacionTemporal, '../carpetas-clientes/'.$ubicacion.'/'.$nombreArchivo);
-        }
-
-        
-        // Responder al cliente
-        echo json_encode(true);
+        echo '1';
     }
+    mysqli_close($conexion); 
+
 ?>

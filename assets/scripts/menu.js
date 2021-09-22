@@ -9,6 +9,51 @@ $(document).ready(() =>
         obtener_carpetas_clientes();
     }
 
+    $(document).on('click', '.aprobar-archivo', function ()
+    {
+        let element = $(this)[0].parentElement.parentElement;
+        let nombre_carpeta = $(element).attr('archivo');
+
+        var ubicacion_carpeta = $('#nombre-carpeta').val()
+
+        var ubicacion = ubicacion_carpeta+'/'+nombre_carpeta;
+
+        console.log(ubicacion)
+
+        Swal.fire(
+        {
+            title: '¿Queres aprobar este archivo?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Aprobar',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => 
+        {
+            if (result.isConfirmed) 
+            {
+                $.post('partials/aprobar-archivo.php', {ubicacion}, function(response)
+                {
+                    console.log(response)
+                    if(response != '11')
+                    {
+                        Swal.fire(
+                            'Error',
+                            'Intentar mas tarde',
+                            'error'
+                        )
+                    }
+                    else
+                    {
+                        obtener_archivos(ubicacion_carpeta);
+                    }
+                    
+                });       
+            }
+        });
+    });
+
     $(document).on('click', '.remove-carpeta', function()
     {
         let element = $(this)[0].parentElement.parentElement;
@@ -31,7 +76,7 @@ $(document).ready(() =>
         {
             if (result.isConfirmed) 
             {
-                $.post('partials/eliminar-archivos.php', {ubicacion}, function(response)
+                $.post('partials/eliminar-carpetas.php', {ubicacion}, function(response)
                 {
                     console.log(response)
                     if(response != '')
@@ -89,7 +134,7 @@ $(document).ready(() =>
                     }
                     else
                     {
-                        obtener_carpetas(ubicacion_carpeta);
+                        obtener_archivos(ubicacion_carpeta);
                     }
                     
                 });       

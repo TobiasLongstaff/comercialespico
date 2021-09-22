@@ -68,7 +68,12 @@
                         <div class="container-btn-upload">
                             <input id="btn-agregar-nueva-cliente" type="submit" class="btn-enviar" value="Agregar">
                         </div>
-                    </form>          
+                    </form>  
+                    <form class="container-mail" id="form-editar-mail">
+                        <input type="email" class="textbox-general-mail" id="mail-general" placeholder="Mail" value="<?=$_SESSION['mail_general'];?>" required>
+                        <input id="btn-agregar-nueva-cliente" type="submit" class="btn-enviar" value="Editar">
+                        <label id="error-mail"></label>
+                    </form>        
                 </div>
             </div>
         </main>

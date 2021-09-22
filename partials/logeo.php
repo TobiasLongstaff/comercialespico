@@ -22,7 +22,14 @@
                 $_SESSION['tipo_usuario'] = $tipo_usuario;
                 $_SESSION['nombre_usuario'] = $filas['nombre_apellido'];
                 $_SESSION['mail_usuario'] = $filas['mail'];             
-                $_SESSION['nombre_carpeta'] = $filas['nombre_carpeta'];   
+                $_SESSION['nombre_carpeta'] = $filas['nombre_carpeta'];
+
+                $sql_mail = "SELECT * FROM mail";
+                $resultado_mail = mysqli_query($conexion, $sql_mail);
+                if($filas_mail = mysqli_fetch_array($resultado_mail))
+                {
+                    $_SESSION['mail_general'] = $filas_mail['correo'];
+                }
 
                 echo '1';                
             }

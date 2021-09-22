@@ -3,6 +3,28 @@ $(document).ready(() =>
     var edit_cliente = false;
     obtener_clientes();
 
+    $('#form-editar-mail').submit(function(e) 
+    {
+        var mail = $('#mail-general').val();
+
+        $.post('partials/editar-mail-general.php', {mail}, function (data)
+        {
+            if(data == "1")
+            {
+                Swal.fire(
+                    '¡Operación realizada exitosamente!',
+                    '',
+                    'success'
+                )
+            }
+            else
+            {
+                $('#error-mail').html(data);
+            }
+        });
+        e.preventDefault();
+    })
+
     $("#form-abm-clientes").submit(function(e)
     {
         const postData =
