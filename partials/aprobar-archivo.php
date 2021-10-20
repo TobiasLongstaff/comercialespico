@@ -104,9 +104,9 @@
                 <div class="contenido">
                     <div>
                         <div>
-                            <h1>¡Hola!</h1>
+                            <h1>Hola!</h1>
                             <h2 style="color: #7D7D7D;">Te avisamos que El archivo '.$ubicacion.' ha sido aprobado por '.$_SESSION['nombre_usuario'].' Gracias por utilizar drivecomercial.com<br>
-                            En caso de inconvenientes contactar con soporte técnico.</h2>              
+                            En caso de inconvenientes contactar con soporte tecnico.</h2>              
                         </div>               
                     </div>
                 </div>

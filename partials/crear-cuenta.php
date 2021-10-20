@@ -123,11 +123,11 @@
                         <div class="contenido">
                             <div>
                                 <div>
-                                    <h1>¡Hola!</h1>
-                                    <h2 style="color: #7D7D7D;">Su cuente se encuentra en espera de aprobación, espere a que comprobemos todos los <br>
-                                        datos para dar de alta su cuente, una vez esté aprobado llegara un mail <br>
+                                    <h1>Hola!</h1>
+                                    <h2 style="color: #7D7D7D;">Su cuente se encuentra en espera de aprobacion, espere a que comprobemos todos los <br>
+                                        datos para dar de alta su cuente, una vez este aprobado llegara un mail <br>
                                         de aviso. Gracias por utilizar drivecomercial.com<br>
-                                        En caso de inconvenientes contactar con soporte técnico.</h2>              
+                                        En caso de inconvenientes contactar con soporte tecnico.</h2>              
                                 </div>               
                             </div>
                         </div>

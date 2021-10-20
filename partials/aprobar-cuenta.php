@@ -111,11 +111,11 @@
                     <div class="contenido">
                         <div>
                             <div>
-                                <h1>¡Hola!</h1>
+                                <h1>Hola!</h1>
                                 <h2 style="color: #7D7D7D;">Su cuenta ya se encuentra habilitada para realizar operaciones dentro del sistema.<br>
                                 En caso de inconvenientes contactar son soporte tecnico.</h2>                 
                             </div>
-                            <a style="color: #ffffff;" href="https://drivecomercial.com/">Iniciar sesión</a>               
+                            <a style="color: #ffffff;" href="https://drivecomercial.com/">Iniciar sesion</a>               
                         </div>
                     </div>
                 </body>';

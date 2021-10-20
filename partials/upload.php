@@ -93,9 +93,9 @@
                 <div class="contenido">
                     <div>
                         <div>
-                            <h1>¡Hola!</h1>
-                            <h2 style="color: #7D7D7D;">Te avisamos que se subió un nuevo archivo a la carpeta '.$ubicacion.'. Gracias por utilizar drivecomercial.com<br>
-                            En caso de inconvenientes contactar con soporte técnico.</h2>              
+                            <h1>Hola!</h1>
+                            <h2 style="color: #7D7D7D;">Te avisamos que se subio un nuevo archivo a la carpeta '.$ubicacion.'. Gracias por utilizar drivecomercial.com<br>
+                            En caso de inconvenientes contactar con soporte tecnico.</h2>              
                         </div>               
                     </div>
                 </div>
