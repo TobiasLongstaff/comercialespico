@@ -78,6 +78,7 @@ nav h1
 .container-carpetas, .container-btn-archivos
 {
     padding: 20px;
+    padding-top: 5px;
     width: 200px;
     text-align: center;
     border-radius: 10px;
@@ -205,7 +206,6 @@ nav h1
     padding-top: 20px;
     padding-bottom: 0;
     height: 70vh;
-    padding-right: 20px;
     border-right: #dfe2e6 solid 1px;
 }
 
@@ -716,7 +716,7 @@ th
 
 .upload-file, .upload-file-check
 {
-    font-size: 90px;
+    font-size: 75px;
     color: var(--azul);
     margin: 20px 0;
 }
@@ -727,6 +727,20 @@ th
 }
 
 /* OTROS */
+
+.text-titulo
+{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: Ellipsis;
+    margin: 0;
+}
+
+.text-fecha
+{
+    font-size: 12px;
+}
 
 a
 {

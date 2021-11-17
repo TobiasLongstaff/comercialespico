@@ -15,60 +15,46 @@
             $ubicacion = $_POST['ubicacion'];
         }
 
-        $ruta = '../carpetas-clientes/'.$ubicacion.'/';    
+        $ruta = '../carpetas-clientes/'.$ubicacion.'/';   
 
         function obtener_estructura_directorios($ruta, $ubicacion)
         {
             if(is_dir($ruta))
             {
+                $tipo_usuario = $_SESSION['tipo_usuario'];
                 $gestor = opendir($ruta);
+                $json = array();
                 while(($archivo = readdir($gestor)) !== false)  
                 {
                     if($archivo != "." && $archivo != "..") 
                     {
-                        $tipo_usuario = $_SESSION['tipo_usuario'];
                         $archivo_class = str_replace('.', '-', $archivo);
                         $archivo_class = str_replace('!', '-', $archivo_class);
-                        echo '
-                        <div class="container-btn-archivos" archivo="'.$archivo.'" filanom="'.$archivo_class.'" filaId=https://drivecomercial.com/carpetas-clientes/'.$ubicacion.'/'.$archivo.'>
-                            <button class="mostrar-archivo">';
-                                if (strpos($archivo, '!') == false) 
-                                {
-                                    echo '<i class="upload-file uil uil-file"></i><br>';
-                                }
-                                else
-                                {
-                                    echo '<i class="upload-file-check uil uil-file-check"></i><br>';
-                                }
-                        
-                            echo '<label>'.$archivo.'</label>
-                            </button>
-                            <div class="container-controles-archivos container-controles-archivos-'.$archivo_class.'">
-                                <a class="container-btn-descargar" href="https://drivecomercial.com/carpetas-clientes/'.$ubicacion.'/'.$archivo.'" download>
-                                    <button class="descargar-archivo" type="button">Descargar</button>
-                                </a>';
-                        if($tipo_usuario == 'admin' || $tipo_usuario == 'editor')
+                        $fecha = date ("Y-m-d", filectime($ruta.$archivo));
+
+                        if (strpos($archivo, '!') == false) 
                         {
-                            echo '<button class="remove-archivo" type="button">Eliminar</button>';
+                            $tipo_ico = false;
                         }
                         else
                         {
-                            if (strpos($archivo, '!') == false) 
-                            {
-                                echo '<button class="aprobar-archivo" type="button">Aprobar</button>';
-                            }
+                            $tipo_ico = true;
                         }
-                        echo '</div>
-                        </div>';
+
+                        $json[] = array(
+                            'fecha' => $fecha,
+                            'nombre' => $archivo,
+                            'nombre_class' => $archivo_class,
+                            'tipo_usuario' => $tipo_usuario,
+                            'ubicacion' => $ubicacion,
+                            'ico' => $tipo_ico
+                        );
                     }
                 }
                 closedir($gestor);
             } 
-            else 
-            {
-                echo "No es una ruta de directorio valida<br/>";
-                echo $ruta;
-            }
+            $jsonstring = json_encode($json);
+            echo $jsonstring;
         }
     
         obtener_estructura_directorios($ruta, $ubicacion);

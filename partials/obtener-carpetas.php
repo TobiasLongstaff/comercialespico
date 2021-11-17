@@ -18,27 +18,24 @@
         {
             if(is_dir($ruta))
             {
+                $tipo_usuario = $_SESSION['tipo_usuario'];
                 $gestor = opendir($ruta);
                 while(($archivo = readdir($gestor)) !== false)  
                 {
                     if($archivo != "." && $archivo != "..") 
                     {
-                        $tipo_usuario = $_SESSION['tipo_usuario'];
-                        echo '
-                        <div class="container-carpetas" filaId='.$archivo.'>
-                            <button class="btn-carpeta">
-                                <i class="upload-file fas fa-folder"></i><br>
-                                <label>'.$archivo.'</label>
-                            </button>';
-                        if($tipo_usuario == 'admin' || $tipo_usuario == 'editor')
-                        {
-                            echo '<div class="container-controles-carpetas container-controles-carpetas-'.$archivo.'">
-                                <button class="remove-carpeta" type="button" >Eliminar</button>
-                            </div>';
-                        }
-                        echo '</div>';
+                        $fecha = date ("Y-m-d", filectime($ruta.'/'.$archivo));
+
+                        $json[] = array(
+                            'fecha' => $fecha,
+                            'nombre' => $archivo,
+                            'tipo_usuario' => $tipo_usuario,
+                        );
                     }
                 }
+
+                $jsonstring = json_encode($json);
+                echo $jsonstring;
                 closedir($gestor);
             } 
             else 

@@ -307,7 +307,58 @@ $(document).ready(() =>
             data: {ubicacion},
             success: function (response)
             {
-                $('#container-carpetas').html(response);
+                let archivos = JSON.parse(response);
+                archivos.sort(function(a, b) { a = new Date(a.fecha); b = new Date(b.fecha); return a>b ? -1 : a<b ? 1 : 0; })
+                let plantilla = '';
+                let icono = '';
+                let btn_archivo = '';
+                
+                if(response != '[]')
+                {
+                    archivos.forEach(archivo =>
+                    {
+                        if(archivo.ico == false) 
+                        {
+                            icono = '<i class="upload-file uil uil-file"></i><br>';
+                        }
+                        else
+                        {
+                            icono = '<i class="upload-file-check uil uil-file-check"></i><br>';
+                        }
+    
+                        if(archivo.tipo_usuario == 'admin' || archivo.tipo_usuario == 'editor')
+                        {
+                            btn_archivo = '<button class="remove-archivo" type="button">Eliminar</button>';
+                        }
+                        else
+                        {
+                            if(archivo.ico == false) 
+                            {
+                                btn_archivo = '<button class="aprobar-archivo" type="button">Aprobar</button>';
+                            }
+                        }
+    
+                        plantilla += 
+                        `
+                        <div class="container-btn-archivos" archivo="${archivo.nombre}" filanom="${archivo.nombre_class}" filaId=https://drivecomercial.com/carpetas-clientes/${archivo.ubicacion}/${archivo.nombre}>
+                            <span class="text-fecha">${archivo.fecha}</span>
+                            <button class="mostrar-archivo">`+icono+
+                                `<p class="text-titulo" title="${archivo.nombre}">${archivo.nombre}</p>
+                            </button>
+                            <div class="container-controles-archivos container-controles-archivos-${archivo.nombre_class}">
+                                <a class="container-btn-descargar" href="https://drivecomercial.com/carpetas-clientes/${archivo.ubicacion}/${archivo.nombre}" download>
+                                    <button class="descargar-archivo" type="button">Descargar</button>
+                                </a>`+btn_archivo+`
+                            </div>
+                        </div>`
+                    });
+                }
+                else
+                {
+                    plantilla += 
+                    `<span>Carpeta vacia</span>`
+                }
+                $('#container-carpetas').html(plantilla);
             }
         });
     }
@@ -334,7 +385,31 @@ $(document).ready(() =>
             data: {ubicacion},
             success: function (response)
             {
-                $('#container-carpetas').html(response);
+                let archivos = JSON.parse(response);
+                archivos.sort(function(a, b) { a = new Date(a.fecha); b = new Date(b.fecha); return a>b ? -1 : a<b ? 1 : 0; })
+                let plantilla = '';
+                let btn_archivo = '';
+                
+                archivos.forEach(archivo =>
+                {
+                    if(archivo.tipo_usuario == 'admin' || archivo.tipo_usuario == 'editor')
+                    {
+                        btn_archivo = `<div class="container-controles-carpetas container-controles-carpetas-${archivo.nombre}">
+                               <button class="remove-carpeta" type="button" >Eliminar</button>
+                             </div>`
+                    }
+
+                    plantilla += 
+                    `
+                    <div class="container-carpetas" filaId="${archivo.nombre}">
+                        <span class="text-fecha">${archivo.fecha}</span><br>
+                        <button class="btn-carpeta">
+                            <i class="upload-file fas fa-folder"></i><br>
+                            <label>${archivo.nombre}</label>
+                        </button>`+btn_archivo+`
+                    </div>`
+                });
+                $('#container-carpetas').html(plantilla);
             }
         });
     }
