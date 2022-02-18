@@ -390,25 +390,33 @@ $(document).ready(() =>
                 let plantilla = '';
                 let btn_archivo = '';
                 
-                archivos.forEach(archivo =>
+                if(response != '[]')
                 {
-                    if(archivo.tipo_usuario == 'admin' || archivo.tipo_usuario == 'editor')
+                    archivos.forEach(archivo =>
                     {
-                        btn_archivo = `<div class="container-controles-carpetas container-controles-carpetas-${archivo.nombre}">
-                               <button class="remove-carpeta" type="button" >Eliminar</button>
-                             </div>`
-                    }
+                        if(archivo.tipo_usuario == 'admin' || archivo.tipo_usuario == 'editor')
+                        {
+                            btn_archivo = `<div class="container-controles-carpetas container-controles-carpetas-${archivo.nombre}">
+                                <button class="remove-carpeta" type="button" >Eliminar</button>
+                                </div>`
+                        }
 
+                        plantilla += 
+                        `
+                        <div class="container-carpetas" filaId="${archivo.nombre}">
+                            <span class="text-fecha">${archivo.fecha}</span><br>
+                            <button class="btn-carpeta">
+                                <i class="upload-file fas fa-folder"></i><br>
+                                <label>${archivo.nombre}</label>
+                            </button>`+btn_archivo+`
+                        </div>`
+                    });
+                }
+                else
+                {
                     plantilla += 
-                    `
-                    <div class="container-carpetas" filaId="${archivo.nombre}">
-                        <span class="text-fecha">${archivo.fecha}</span><br>
-                        <button class="btn-carpeta">
-                            <i class="upload-file fas fa-folder"></i><br>
-                            <label>${archivo.nombre}</label>
-                        </button>`+btn_archivo+`
-                    </div>`
-                });
+                    `<span>Carpeta vacia</span>`
+                }
                 $('#container-carpetas').html(plantilla);
             }
         });

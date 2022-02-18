@@ -20,6 +20,7 @@
             {
                 $tipo_usuario = $_SESSION['tipo_usuario'];
                 $gestor = opendir($ruta);
+                $json = array();
                 while(($archivo = readdir($gestor)) !== false)  
                 {
                     if($archivo != "." && $archivo != "..") 
@@ -33,15 +34,10 @@
                         );
                     }
                 }
-
-                $jsonstring = json_encode($json);
-                echo $jsonstring;
                 closedir($gestor);
             } 
-            else 
-            {
-                echo "No es una ruta de directorio valida<br/>";
-            }
+            $jsonstring = json_encode($json);
+            echo $jsonstring;
         }
             
         obtener_estructura_directorios($ruta);  
